@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Albums
  *
- * @ORM\Table(name="albums", indexes={@ORM\Index(name="FK_photo", columns={"idPhotos"}), @ORM\Index(name="FK_user", columns={"idUser"})})
+ * @ORM\Table(name="albums", indexes={@ORM\Index(name="FK_user", columns={"idUser"}), @ORM\Index(name="FK_photo", columns={"idPhotos"})})
  * @ORM\Entity
  */
 class Albums
@@ -17,7 +17,7 @@ class Albums
      *
      * @ORM\Column(name="idAlbum", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $idalbum;
 
@@ -32,6 +32,8 @@ class Albums
      * @var int
      *
      * @ORM\Column(name="idPhotos", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $idphotos;
 
@@ -62,13 +64,6 @@ class Albums
     public function getIdphotos(): ?int
     {
         return $this->idphotos;
-    }
-
-    public function setIdphotos(int $idphotos): self
-    {
-        $this->idphotos = $idphotos;
-
-        return $this;
     }
 
     public function getLibelle(): ?string

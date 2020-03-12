@@ -34,6 +34,7 @@ class LoginController extends AbstractController
 
             if($res)
             {
+                session_start();
                 $_SESSION["id"]=$res->getId();
                 return $this->redirectToRoute('/');
                 exit;
