@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Albums;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,14 +19,23 @@ class AccueilController extends AbstractController
 
         if(!$idUser)
         {
-            return $this->redirectToRoute('/login');
+            return $this->redirectToRoute('login');    
         }
-        
-        $user=$this->getDoctrine()->getRepository(User::class)->find($idUser);
 
-        $photo=$this->getDoctrine()->getRepository(Albums::class)->findBy([
-            "iduser"=>$user
-        ]);
+        
+        
+        $photo=$this->getDoctrine()
+        ->getManager()
+        ->createQueryBuilder()
+        ->select('a')
+        ->from(Albums::class, 'a')
+        ->join('a.iduser','b')
+        ->where('b.id = :user_id')
+        ->setParameter('user_id', $idUser)
+        ->getQuery()
+        ->getResult();
+
+        dump($photo);
 
         
 
@@ -35,9 +46,9 @@ class AccueilController extends AbstractController
         ]);
     }
 
-    private function getUser()
+    protected function getUser()
     {
-        session_start();
+        
         if(!isset($_SESSION["id"]))
         {
             return false;

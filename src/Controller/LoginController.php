@@ -15,6 +15,8 @@ class LoginController extends AbstractController
      */
     public function index(Request $request)
     {
+
+
         $error="";
 
         $user=new User();
@@ -34,13 +36,12 @@ class LoginController extends AbstractController
 
             if($res)
             {
-                session_start();
+                
                 $_SESSION["id"]=$res->getId();
-                return $this->redirectToRoute('/');
-                exit;
+                return $this->redirectToRoute('accueil');
             }else
             {
-                $error="mauvais identifiants";
+                $error="Mauvais identifiants";
             }
            
         }
