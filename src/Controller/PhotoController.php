@@ -63,6 +63,8 @@ class PhotoController extends AbstractController
                 $album->addPhoto($photo);
 
             }
+
+            $entityManager->flush();
         }
 
         $user=$this->getDoctrine()->getRepository(User::class)->find($idUser);
