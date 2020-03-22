@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  */
-class User
+class Photo
 {
     /**
      * @ORM\Id()
@@ -21,15 +21,10 @@ class User
     /**
      * @ORM\Column(type="text")
      */
-    private $mail;
+    private $path;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    private $mdp;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Album", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Album", mappedBy="photo")
      */
     private $albums;
 
@@ -43,26 +38,14 @@ class User
         return $this->id;
     }
 
-    public function getMail(): ?string
+    public function getPath(): ?string
     {
-        return $this->mail;
+        return $this->path;
     }
 
-    public function setMail(string $mail): self
+    public function setPath(string $path): self
     {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
-    public function getMdp(): ?string
-    {
-        return $this->mdp;
-    }
-
-    public function setMdp(string $mdp): self
-    {
-        $this->mdp = $mdp;
+        $this->path = $path;
 
         return $this;
     }
@@ -79,7 +62,7 @@ class User
     {
         if (!$this->albums->contains($album)) {
             $this->albums[] = $album;
-            $album->setUser($this);
+            $album->addPhoto($this);
         }
 
         return $this;
@@ -89,10 +72,7 @@ class User
     {
         if ($this->albums->contains($album)) {
             $this->albums->removeElement($album);
-            // set the owning side to null (unless already changed)
-            if ($album->getUser() === $this) {
-                $album->setUser(null);
-            }
+            $album->removePhoto($this);
         }
 
         return $this;

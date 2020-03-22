@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter des photos{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Fun Album</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item ">
+            <a class="nav-link" href="/">Accueil</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/album">Album</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/photo">Ajouter photos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/diaporama">Diaporama</a>
+        </li>
+        </ul>
+    </div>
+</nav>
+<form method="POST" enctype="multipart/form-data">
+    <select name="album" id="" required>
+        {% for album in albums %}
+        <option value='{{ album.id }}'>{{ album.nom }}</option>
+    {% endfor %}
+    </select>
+    <input type="file" multiple name="photo[]" accept="image/png,image/jpg" required>
+    <input type="submit" name="submit">
+</form>
+
+{% endblock %}

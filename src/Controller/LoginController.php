@@ -7,9 +7,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Form\LoginFormType;
 use Symfony\Component\HttpFoundation\Request ;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class LoginController extends AbstractController
 {
+
+    public $session;
+
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
+
+
     /**
      * @Route("/login", name="login")
      */
@@ -37,7 +47,7 @@ class LoginController extends AbstractController
             if($res)
             {
                 
-                $_SESSION["id"]=$res->getId();
+                $this->session->set("id",$res->getId());
                 return $this->redirectToRoute('accueil');
             }else
             {
