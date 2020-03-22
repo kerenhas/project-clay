@@ -39,6 +39,7 @@ class PhotoController extends AbstractController
 
         if($request->get("submit"))
         {
+            //on recupere l'album choisit
             $album=$this->getDoctrine()->getRepository(Album::class)->find($request->get("album"));
 
             
@@ -54,7 +55,6 @@ class PhotoController extends AbstractController
                 }
 
                 $photo=new Photo();
-
                 
                 $photo->setPath("upload/$name");
             
@@ -68,7 +68,7 @@ class PhotoController extends AbstractController
         $user=$this->getDoctrine()->getRepository(User::class)->find($idUser);
         
 
-
+//render est la methode de rendu d'affichage , donc qui va retourner dans albums la collection d'album pour ce user
         return $this->render('photo/index.html.twig', [
             'albums' => $user->getAlbums(),
         ]);

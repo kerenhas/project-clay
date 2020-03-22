@@ -38,12 +38,12 @@ class DiaporamaController extends AbstractController
 
         $images=[];
 
+        //quand il clique sur le bouton submit 
         if($request->get("submit"))
         {
+            //on va chercher l'album
             $album=$this->getDoctrine()->getRepository(Album::class)->find($request->get("album"));
-
            
-
             foreach($album->getPhoto() as $v)
             {
                 $images[]=$v->getPath();
