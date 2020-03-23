@@ -31,8 +31,10 @@ class AccueilController extends AbstractController
             return $this->redirectToRoute('login');    
         }
 
+        //on recupere le bon objet de user
         $user=$this->getDoctrine()->getRepository(User::class)->find($idUser);
         
+        //on recupere une collection albums
         $album=$user->getAlbums();
 
         $image0="https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png";
@@ -41,6 +43,7 @@ class AccueilController extends AbstractController
 
         if(count($album))
         {
+            //On recupere les photos du premier album pour les afficher dns la premiere page
             $photo=$album[0]->getPhoto();
 
             if(count($photo))

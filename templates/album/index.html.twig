@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Album index{% endblock %}
+{% block title %}Albums{% endblock %}
 
 
 {% block body %}
@@ -26,7 +26,7 @@
             </ul>
         </div>
 </nav>
-    <h1>Album index</h1>
+    <center><h2 style="font-style: oblique; color: red;">Vos Albums</h2></center>
 
     <table class="table">
         <thead>
@@ -54,5 +54,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('album_new') }}">Create new</a>
+    <center><a href="{{ path('album_new') }}">Create new</a></center>
 {% endblock %}

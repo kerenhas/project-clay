@@ -12,6 +12,7 @@ class LoginFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        //permet la création du formulaire
         $builder
             ->add('Mail')
             ->add('Mdp')

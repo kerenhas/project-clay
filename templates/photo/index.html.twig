@@ -25,14 +25,17 @@
             </ul>
         </div>
 </nav>
+   <center><h2 style="font-style: oblique; color: red;">Ajouter une photo à un album !!</h2></center>
+   <p style="color: green">Selectionner un album:</p>
 <form method="POST" enctype="multipart/form-data">
     <select name="album" id="" required>
         {% for album in albums %}
         <option value='{{ album.id }}'>{{ album.nom }}</option>
     {% endfor %}
     </select>
+    <br><br><p style="color: green">Votre photo :</p>
     <input type="file" multiple name="photo[]" accept="image/png,image/jpg" required>
-    <input type="submit" name="submit">
+    <center><input type="submit" name="submit"></center>
 </form>
 
 {% endblock %}

@@ -37,13 +37,14 @@ class LoginController extends AbstractController
         
         if ($form->isSubmitted()) {
             
+            //on recupere les valeurs saisies dans notre formulaire
             $user = $form->getData();
-    
+    //recherche dans la bdd
             $res=$this->getDoctrine()->getRepository(User::class)->findOneBy([
                 "mail"=>$user->getMail(),
                 "mdp"=>$user->getMdp()
             ]);
-
+//si il y a un resultat c'est que la connexion est bonne
             if($res)
             {
                 
