@@ -37,9 +37,9 @@ class AccueilController extends AbstractController
         //on recupere une collection albums
         $album=$user->getAlbums();
 
-        $image0="https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png";
-        $image1="https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png";
-        $image2="https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png";
+        $image0="../img1.jpg";
+        $image1="../img2.jfif";
+        $image2="../img3.jfif";
 
         if(count($album))
         {

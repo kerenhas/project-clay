@@ -28,12 +28,16 @@ class AlbumController extends AbstractController
      */
     public function index(): Response
     {
-        $albums = $this->getDoctrine()
+        $idUser=$this->session->get("id");
+        $user=$this->getDoctrine()->getRepository(User::class)->find($idUser);
+        
+
+    /*    $albums = $this->getDoctrine()
             ->getRepository(Album::class)
             ->findAll();
-
+*/
         return $this->render('album/index.html.twig', [
-            'albums' => $albums,
+            'albums' => $user->getAlbums(),
         ]);
     }
 
@@ -101,6 +105,7 @@ class AlbumController extends AbstractController
      */
     public function delete(Request $request, Album $album): Response
     {
+        
         if ($this->isCsrfTokenValid('delete'.$album->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($album);
