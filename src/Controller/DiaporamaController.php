@@ -12,8 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DiaporamaController extends AbstractController
 {
-    
-    
+
+
     public $session;
 
     public function __construct(SessionInterface $session)
@@ -29,32 +29,28 @@ class DiaporamaController extends AbstractController
     {
 
 
-        $idUser=$this->session->get("id");
+        $idUser = $this->session->get("id");
 
-        if(!$idUser)
-        {
-            return $this->redirectToRoute('login');    
+        if (!$idUser) {
+            return $this->redirectToRoute('login');
         }
 
-        $images=[];
+        $images = [];
 
         //quand il clique sur le bouton submit 
-        if($request->get("submit"))
-        {
+        if ($request->get("submit")) {
             //on va chercher l'album
-            $album=$this->getDoctrine()->getRepository(Album::class)->find($request->get("album"));
-           
-            foreach($album->getPhoto() as $v)
-            {
-                $images[]=$v->getPath();
+            $album = $this->getDoctrine()->getRepository(Album::class)->find($request->get("album"));
+
+            foreach ($album->getPhoto() as $v) {
+                $images[] = $v->getPath();
             }
-            
         }
 
-        $user=$this->getDoctrine()->getRepository(User::class)->find($idUser);
+        $user = $this->getDoctrine()->getRepository(User::class)->find($idUser);
         return $this->render('diaporama/index.html.twig', [
-            'albums' =>$user->getAlbums(),
-            'images'=>$images
+            'albums' => $user->getAlbums(),
+            'images' => $images
         ]);
     }
 }

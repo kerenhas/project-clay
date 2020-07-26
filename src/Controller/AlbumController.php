@@ -28,11 +28,11 @@ class AlbumController extends AbstractController
      */
     public function index(): Response
     {
-        $idUser=$this->session->get("id");
-        $user=$this->getDoctrine()->getRepository(User::class)->find($idUser);
-        
+        $idUser = $this->session->get("id");
+        $user = $this->getDoctrine()->getRepository(User::class)->find($idUser);
 
-    /*    $albums = $this->getDoctrine()
+
+        /*    $albums = $this->getDoctrine()
             ->getRepository(Album::class)
             ->findAll();
 */
@@ -48,15 +48,15 @@ class AlbumController extends AbstractController
     {
 
         $album = new Album();
-        $form = $this->createForm(AlbumType::class, $album,[],$this->session);
+        $form = $this->createForm(AlbumType::class, $album, [], $this->session);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
 
             $album->setUser($this->getDoctrine()
-            ->getRepository(User::class)
-            ->find($this->session->get("id")));
+                ->getRepository(User::class)
+                ->find($this->session->get("id")));
 
             $entityManager->persist($album);
             $entityManager->flush();
@@ -105,8 +105,8 @@ class AlbumController extends AbstractController
      */
     public function delete(Request $request, Album $album): Response
     {
-        
-        if ($this->isCsrfTokenValid('delete'.$album->getId(), $request->request->get('_token'))) {
+
+        if ($this->isCsrfTokenValid('delete' . $album->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($album);
             $entityManager->flush();

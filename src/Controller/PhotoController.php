@@ -30,47 +30,43 @@ class PhotoController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        $idUser=$this->session->get("id");
+        $idUser = $this->session->get("id");
 
-        if(!$idUser)
-        {
-            return $this->redirectToRoute('login');    
+        if (!$idUser) {
+            return $this->redirectToRoute('login');
         }
 
-        if($request->get("submit"))
-        {
+        if ($request->get("submit")) {
             //on recupere l'album choisit
-            $album=$this->getDoctrine()->getRepository(Album::class)->find($request->get("album"));
+            $album = $this->getDoctrine()->getRepository(Album::class)->find($request->get("album"));
 
-            
+
             foreach ($_FILES["photo"]["name"] as $key => $error) {
 
                 $tmp_name = $_FILES["photo"]["tmp_name"][$key];
                 // basename() peut empêcher les attaques de système de fichiers;
                 // la validation/assainissement supplémentaire du nom de fichier peut être approprié
-                $name =str_replace(" ","-",iconv("UTF-8", "ASCII//TRANSLIT", $_FILES["photo"]["name"][$key]));
-                if(!file_exists("upload/$name"))
-                {
+                $name = str_replace(" ", "-", iconv("UTF-8", "ASCII//TRANSLIT", $_FILES["photo"]["name"][$key]));
+                if (!file_exists("upload/$name")) {
                     move_uploaded_file($tmp_name, "upload/$name");
                 }
 
-                $photo=new Photo();
-                
+                $photo = new Photo();
+
                 $photo->setPath("upload/$name");
-            
+
                 $entityManager->persist($photo);
 
                 $album->addPhoto($photo);
-
             }
 
             $entityManager->flush();
         }
 
-        $user=$this->getDoctrine()->getRepository(User::class)->find($idUser);
-        
+        $user = $this->getDoctrine()->getRepository(User::class)->find($idUser);
 
-//render est la methode de rendu d'affichage , donc qui va retourner dans albums la collection d'album pour ce user
+
+        //render est la methode de rendu d'affichage , donc qui va retourner dans albums la collection d'album pour ce user
         return $this->render('photo/index.html.twig', [
             'albums' => $user->getAlbums(),
         ]);
